@@ -8,7 +8,7 @@
   color: var(--color-text-primary);
   font-size: var(--text-sm);
   font-weight: 500;
-  padding: var(--space-2) var(--space-3);
+  padding: 6px 10px;
   border-radius: 3px;
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.05),

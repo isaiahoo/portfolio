@@ -55,14 +55,9 @@ export const folderData: FolderData[] = [
     variant: 'skills',
     label: 'Skills',
     items: [
-      { id: 'skill-1', label: 'React' },
-      { id: 'skill-2', label: 'TypeScript' },
-      { id: 'skill-3', label: 'Node.js' },
-      { id: 'skill-4', label: 'PostgreSQL' },
-      { id: 'skill-5', label: 'AWS' },
-      { id: 'skill-6', label: 'Docker' },
-      { id: 'skill-7', label: 'GraphQL' },
-      { id: 'skill-8', label: 'Python' },
+      { id: 'skill-frontend', label: 'Frontend', sublabel: 'React · TypeScript · Tailwind' },
+      { id: 'skill-backend', label: 'Backend', sublabel: 'Node.js · Python · PostgreSQL' },
+      { id: 'skill-devops', label: 'DevOps & Tools', sublabel: 'Docker · AWS · Git' },
     ],
   },
   {
@@ -70,12 +65,10 @@ export const folderData: FolderData[] = [
     variant: 'contact',
     label: 'Contact',
     items: [
-      { id: 'contact-cta', label: "Let's work together" },
-      {
-        id: 'contact-link',
-        label: 'Send a message',
-        url: 'mailto:isaiah@example.com',
-      },
+      { id: 'contact-hh', label: 'hh.ru' },
+      { id: 'contact-github', label: 'GitHub', url: 'https://github.com/isaiahoo' },
+      { id: 'contact-telegram', label: 'Telegram', url: 'https://t.me/isaiahooo' },
+      { id: 'contact-instagram', label: 'Instagram', url: 'https://instagram.com/isaia.hoo' },
     ],
   },
 ];
@@ -133,7 +126,7 @@ export const projectData: ProjectData[] = [
 /* ─── Contact ─── */
 
 export const contactData = {
-  email: 'isaiah@example.com',
+  email: 'isaiahoo@proton.me',
   linkedinUrl: 'https://linkedin.com/in/isaiahoo',
   githubUrl: 'https://github.com/isaiahoo',
 };

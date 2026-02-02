@@ -1,16 +1,16 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-8);
+  gap: var(--space-6);
   align-items: start;
-  max-width: 1000px;
+  max-width: 720px;
   margin: 0 auto;
   padding: 0 var(--space-4);
 }
 
 @media (max-width: 1023px) {
   .grid {
-    gap: var(--space-6);
+    gap: var(--space-5);
   }
 }
 
