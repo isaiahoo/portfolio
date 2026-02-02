@@ -1,0 +1,45 @@
+.strip {
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-bg-card);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-6) var(--space-4);
+  margin-top: var(--space-10);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: var(--text-base);
+  font-weight: 500;
+  text-decoration: none;
+  min-height: 44px; /* tap target on mobile */
+  transition: color 150ms ease;
+}
+
+.link:hover {
+  color: var(--color-folder-experience);
+}
+
+.link svg {
+  flex-shrink: 0;
+}
+
+/* ─── Tablet ─── */
+@media (max-width: 1023px) {
+  .strip {
+    gap: var(--space-6);
+  }
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 639px) {
+  .strip {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+}

@@ -1,0 +1,132 @@
+.item {
+  width: 100%;
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  border: none;
+  padding: var(--space-4);
+  text-align: left;
+  cursor: pointer;
+  transition: box-shadow 200ms ease-out;
+}
+
+/* ─── Header (always visible) ─── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.nameAndDesc {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.name {
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: var(--leading-snug);
+}
+
+.shortDesc {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-snug);
+}
+
+.badges {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: flex-end;
+}
+
+/* ─── Detail (expandable) ─── */
+.detail {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  /* Close transition */
+  transition:
+    max-height 250ms cubic-bezier(0.55, 0.06, 0.67, 0.19),
+    opacity 150ms ease-in;
+}
+
+.item.expanded .detail {
+  max-height: 200px;
+  opacity: 1;
+  /* Open transition */
+  transition:
+    max-height 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 200ms ease-out 60ms;
+}
+
+.longDesc {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-3);
+}
+
+.links {
+  display: flex;
+  gap: var(--space-6);
+  margin-top: var(--space-3);
+}
+
+.link {
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--color-folder-experience);
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* ─── Hover (desktop only) ─── */
+@media (hover: hover) {
+  .item:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+}
+
+/* ─── Focus ─── */
+.item:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 639px) {
+  .header {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .badges {
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tags {
+    justify-content: flex-start;
+  }
+}
