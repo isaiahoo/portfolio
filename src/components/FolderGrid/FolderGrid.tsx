@@ -8,7 +8,7 @@ export default function FolderGrid() {
 
   return (
     <div className={styles.grid}>
-      {folderData.map((folder) => (
+      {folderData.map((folder, index) => (
         <FolderCard
           key={folder.id}
           data={folder}
@@ -18,6 +18,7 @@ export default function FolderGrid() {
               prev === folder.id ? null : folder.id
             )
           }
+          animationDelay={index * 0.15}
         />
       ))}
     </div>

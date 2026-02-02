@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { type FolderData } from '../../data/data';
 import useEasterEgg from '../../hooks/useEasterEgg';
 import TagChip from '../TagChip/TagChip';
@@ -7,21 +8,46 @@ interface FolderCardProps {
   data: FolderData;
   isOpen: boolean;
   onToggle: () => void;
+  animationDelay?: number;
 }
 
-export default function FolderCard({ data, isOpen, onToggle }: FolderCardProps) {
+export default function FolderCard({ data, isOpen, onToggle, animationDelay = 0 }: FolderCardProps) {
   const { variant, label, items } = data;
   const { showCursor, showTag, typingText } = useEasterEgg(isOpen, variant);
 
   return (
-    <div className={`${styles.folderContainer} ${styles[variant]}`}>
+    <motion.div
+      className={`${styles.folderContainer} ${styles[variant]}`}
+      initial={{ opacity: 0, y: 50, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+        delay: animationDelay
+      }}
+      whileHover="hover"
+    >
       <button
         className={`${styles.folder} ${isOpen ? styles.open : ''}`}
         onClick={onToggle}
         aria-expanded={isOpen}
         aria-label={`${label}`}
       >
-        <div className={styles.paper}>
+        <motion.div
+          className={styles.paper}
+          variants={{
+            rest: { y: 0 },
+            hover: {
+              y: isOpen ? 0 : -32,
+              transition: {
+                type: "spring",
+                stiffness: 400,
+                damping: 30
+              }
+            }
+          }}
+        >
           {variant === 'skills' ? (
             <div className={styles.tagRow}>
               {items.map((item) => (
@@ -42,7 +68,8 @@ export default function FolderCard({ data, isOpen, onToggle }: FolderCardProps) 
                   className={styles.listItem}
                   style={
                     {
-                      '--stagger-delay': `${120 + index * 60}ms`,
+                      '--stagger-delay': `${150 + index * 80}ms`,
+                      '--paper-index': index,
                     } as React.CSSProperties
                   }
                 >
@@ -73,9 +100,9 @@ export default function FolderCard({ data, isOpen, onToggle }: FolderCardProps) 
               ))}
             </ul>
           )}
-        </div>
+        </motion.div>
         <span className={styles.folderLabel}>{label}</span>
       </button>
-    </div>
+    </motion.div>
   );
 }
