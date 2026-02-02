@@ -1,15 +1,85 @@
-/* ─── Variant Colors ─── */
+/* ─── Variant Colors & Character ─── */
 .experience {
   --folder-color: var(--color-folder-experience);
+  --folder-accent: rgba(139, 92, 246, 0.15); /* Purple accent */
 }
+.experience .folder {
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(255, 255, 255, 0.02) 20px,
+      rgba(255, 255, 255, 0.02) 21px
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--folder-color) 95%, white) 0%,
+      var(--folder-color) 100%
+    );
+}
+
 .projects {
   --folder-color: var(--color-folder-projects);
+  --folder-accent: rgba(234, 179, 8, 0.15); /* Gold accent */
 }
+.projects .folder {
+  background-image:
+    repeating-linear-gradient(
+      135deg,
+      transparent,
+      transparent 15px,
+      rgba(255, 255, 255, 0.025) 15px,
+      rgba(255, 255, 255, 0.025) 16px
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--folder-color) 95%, white) 0%,
+      var(--folder-color) 100%
+    );
+}
+
 .skills {
   --folder-color: var(--color-folder-skills);
+  --folder-accent: rgba(34, 197, 94, 0.15); /* Green accent */
 }
+.skills .folder {
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 25px,
+      rgba(255, 255, 255, 0.02) 25px,
+      rgba(255, 255, 255, 0.02) 26px
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--folder-color) 95%, white) 0%,
+      var(--folder-color) 100%
+    );
+}
+
 .contact {
   --folder-color: var(--color-folder-contact);
+  --folder-accent: rgba(251, 113, 133, 0.15); /* Coral accent */
+}
+.contact .folder {
+  background-image:
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--folder-color) 95%, white) 0%,
+      var(--folder-color) 100%
+    );
 }
 
 /* ─── Container (positions the tab above the folder body) ─── */
@@ -17,6 +87,29 @@
   position: relative;
   padding-top: 20px;
   perspective: 1200px;
+  /* Fixed dimensions - all folders same size like icons */
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* Glossy overlay for premium macOS feel */
+.folderContainer::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 100%
+  );
+  border-radius: 18px 18px 0 0;
+  pointer-events: none;
+  z-index: 15;
 }
 
 /* Tab pseudo-element */
@@ -27,55 +120,44 @@
   left: 16px;
   width: 72px;
   height: 24px;
-  background: var(--folder-color);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--folder-color) 92%, white) 0%,
+    var(--folder-color) 100%
+  );
   border-radius: 10px 10px 0 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: none;
   transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
   z-index: 1;
 }
 
-.folderContainer:has(.folder.open)::before {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-}
 
 /* ─── Folder Body ─── */
 .folder {
   position: relative;
   width: 100%;
-  background: var(--folder-color);
+  /* Background defined per variant for unique character */
   border-radius: 18px;
   border-top-left-radius: 0;
   box-shadow:
     0 2px 4px rgba(0, 0, 0, 0.08),
-    0 6px 16px rgba(0, 0, 0, 0.12);
+    0 6px 16px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  cursor: pointer;
-  border: none;
   padding: 0;
   text-align: left;
   display: flex;
   flex-direction: column;
-  max-height: 240px;
-  transform-origin: top center;
+  transform-origin: center center;
   transform-style: preserve-3d;
-  /* Close transition */
   transition:
-    max-height 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
     box-shadow 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
     transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.folder.open {
-  max-height: 520px;
-  box-shadow:
-    0 4px 8px rgba(0, 0, 0, 0.1),
-    0 12px 32px rgba(0, 0, 0, 0.16);
-  /* Open transition with spring */
-  transition:
-    max-height 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
-    transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ─── Paper (white content area inside the folder) ─── */
@@ -89,15 +171,8 @@
   padding: var(--space-3) var(--space-3) 0;
   overflow: visible;
   flex: 1;
+  min-height: 0;
   z-index: 1;
-  /* Close transition */
-  transition: all 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.folder.open .paper {
-  overflow: hidden;
-  /* Open transition — spring feel */
-  transition: all 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ─── Folder Label (Front Pocket) ─── */
@@ -106,28 +181,36 @@
   z-index: 10;
   display: flex;
   align-items: center;
-  color: color-mix(in srgb, var(--folder-color) 15%, black);
+  color: rgba(0, 0, 0, 0.6);
+  mix-blend-mode: overlay;
   font-size: var(--text-lg);
   font-weight: 600;
   letter-spacing: -0.01em;
-  padding: var(--space-4) var(--space-5) var(--space-5);
-  min-height: 72px;
-  background: var(--folder-color);
-  /* Subtler upward shadow cast onto papers */
-  box-shadow: 0 -6px 16px -6px rgba(0, 0, 0, 0.12);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  padding: var(--space-4) var(--space-5) calc(var(--space-5) + 2px) calc(var(--space-5) + 4px);
+  height: 72px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--folder-color) 98%, white) 0%,
+    var(--folder-color) 100%
+  );
+  /* Deep upward shadow cast onto papers */
+  box-shadow:
+    0 -10px 28px -6px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   margin-top: auto;
   flex-shrink: 0;
-  /* Curved wave at top - asymmetric for visual interest */
-  border-top-left-radius: 40px 20px;
-  border-top-right-radius: 12px 8px;
+  /* Elegant, controlled curve - professional but organic */
+  border-top-left-radius: 50px;
+  border-top-right-radius: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* ─── List (Experience, Projects, Contact variants) ─── */
 .list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 6px;
   padding-bottom: var(--space-3);
 }
 
@@ -143,8 +226,9 @@
   border: none;
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.05),
-    0 2px 4px rgba(0, 0, 0, 0.06),
-    0 4px 8px rgba(0, 0, 0, 0.08),
+    0 3px 6px rgba(0, 0, 0, 0.10),
+    0 6px 12px rgba(0, 0, 0, 0.12),
+    0 9px 18px rgba(0, 0, 0, 0.08),
     inset 0 0.5px 1px rgba(255, 255, 255, 0.8);
   opacity: 1;
   transition:
@@ -153,27 +237,24 @@
     opacity 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Natural stacking variations when folder is closed */
-.listItem:nth-child(1) {
-  transform: translateY(0) translateX(0) rotate(0deg);
+/* Subtle human touch - barely noticeable imperfection */
+.listItem:nth-child(odd) {
+  transform: translateY(0) translateX(-0.5px) rotate(-0.3deg);
 }
 
-.listItem:nth-child(2) {
-  transform: translateY(0) translateX(1px) rotate(0.3deg);
+.listItem:nth-child(even) {
+  transform: translateY(0) translateX(0.5px) rotate(0.4deg);
+}
+
+/* Specific adjustments for variety */
+.listItem:nth-child(1) {
+  transform: translateY(0) translateX(0) rotate(-0.2deg);
 }
 
 .listItem:nth-child(3) {
-  transform: translateY(0) translateX(-1px) rotate(-0.2deg);
+  transform: translateY(0) translateX(-0.8px) rotate(-0.5deg);
 }
 
-.listItem:nth-child(4) {
-  transform: translateY(0) translateX(0.5px) rotate(0.1deg);
-}
-
-/* Reset transforms when folder is open */
-.folder.open .listItem {
-  transform: translateY(0) translateX(0) rotate(0deg) !important;
-}
 
 .listItem::before {
   content: '';
@@ -235,20 +316,33 @@
   transition: opacity 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.folder.open .listItem {
-  transition-delay: var(--stagger-delay, 150ms);
-}
 
-/* Hover effect on individual paper sheets */
+/* Hover effect on individual paper sheets - each tilts differently */
 @media (hover: hover) {
   .listItem:hover {
-    transform: translateY(-4px) rotate(-0.5deg);
+    transform: translateY(-8px) rotate(-2deg);
     box-shadow:
       0 0 0 1px rgba(0, 0, 0, 0.06),
       0 4px 6px rgba(0, 0, 0, 0.08),
       0 8px 16px rgba(0, 0, 0, 0.12),
       0 16px 32px rgba(0, 0, 0, 0.1),
       inset 0 0.5px 1px rgba(255, 255, 255, 0.9);
+  }
+
+  .listItem:nth-child(2n):hover {
+    transform: translateY(-8px) rotate(2.5deg);
+  }
+
+  .listItem:nth-child(3n):hover {
+    transform: translateY(-8px) rotate(-1.5deg);
+  }
+
+  .listItem:nth-child(4n):hover {
+    transform: translateY(-8px) rotate(3deg);
+  }
+
+  .listItem:nth-child(5n):hover {
+    transform: translateY(-8px) rotate(-2.8deg);
   }
 
   .listItem:hover::after {
@@ -297,117 +391,10 @@
 
 /* ─── Skills Tag Row ─── */
 .tagRow {
-  position: relative;
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  padding: var(--space-4);
   padding-bottom: var(--space-3);
-  margin-bottom: var(--space-3);
-  background: linear-gradient(
-    180deg,
-    #fefefe 0%,
-    #fcfcfb 100%
-  );
-  border-radius: 3px;
-  border: none;
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.05),
-    0 2px 4px rgba(0, 0, 0, 0.06),
-    0 4px 8px rgba(0, 0, 0, 0.08),
-    inset 0 0.5px 1px rgba(255, 255, 255, 0.8);
-  opacity: 1;
-  transform: translateY(0) translateX(-0.5px) rotate(-0.1deg);
-  transition:
-    opacity 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* Reset transform when folder is open */
-.folder.open .tagRow {
-  transform: translateY(0) translateX(0) rotate(0deg);
-}
-
-.tagRow::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  background:
-    radial-gradient(
-      ellipse at top left,
-      rgba(0, 0, 0, 0.02) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at top right,
-      rgba(0, 0, 0, 0.015) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at bottom left,
-      rgba(0, 0, 0, 0.015) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at bottom right,
-      rgba(0, 0, 0, 0.02) 0%,
-      transparent 50%
-    ),
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 1px,
-      rgba(0, 0, 0, 0.006) 1px,
-      rgba(0, 0, 0, 0.006) 2px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 1px,
-      rgba(0, 0, 0, 0.006) 1px,
-      rgba(0, 0, 0, 0.006) 2px
-    );
-  border-radius: 3px;
-  pointer-events: none;
-  opacity: 1;
-}
-
-.tagRow::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.3) 45%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  border-radius: 3px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.folder.open .tagRow {
-  transition-delay: 150ms;
-}
-
-/* Hover effect on skills paper */
-@media (hover: hover) {
-  .tagRow:hover {
-    transform: translateY(-4px) rotate(0.5deg);
-    box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 0.06),
-      0 4px 6px rgba(0, 0, 0, 0.08),
-      0 8px 16px rgba(0, 0, 0, 0.12),
-      0 16px 32px rgba(0, 0, 0, 0.1),
-      inset 0 0.5px 1px rgba(255, 255, 255, 0.9);
-  }
-
-  .tagRow:hover::after {
-    opacity: 1;
-  }
 }
 
 /* ─── Easter Egg Cursor ─── */
@@ -431,48 +418,18 @@
   }
 }
 
-/* ─── Hover & Press (desktop / mouse only) ─── */
-@media (hover: hover) {
-  .folder:hover {
-    transform: translateY(-3px);
-    box-shadow:
-      0 3px 6px rgba(0, 0, 0, 0.1),
-      0 8px 20px rgba(0, 0, 0, 0.14);
-  }
-
-  .folderContainer:hover::before {
-    transform: translateY(-1px) scale(1.01);
-  }
-
-  .folder:active {
-    transform: translateY(-1px);
-    box-shadow:
-      0 2px 4px rgba(0, 0, 0, 0.08),
-      0 4px 10px rgba(0, 0, 0, 0.1);
-    transition-duration: 120ms;
-    transition-timing-function: ease-out;
-  }
-}
-
-/* ─── Focus (keyboard only) ─── */
-.folder:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 2px;
-}
 
 /* ─── Responsive ─── */
 @media (max-width: 1023px) {
-  .folder {
-    max-height: 220px;
-  }
-  .folder.open {
-    max-height: 520px;
+  .folderContainer {
+    max-width: 360px;
   }
 }
 
 @media (max-width: 639px) {
   .folderContainer {
     padding-top: 18px;
+    max-width: 100%;
   }
 
   .folderContainer::before {
@@ -481,19 +438,13 @@
     left: 12px;
   }
 
-  .folder {
-    max-height: 200px;
-  }
-  .folder.open {
-    max-height: 480px;
-  }
-
   .folderLabel {
     font-size: var(--text-md);
-    padding: var(--space-3) var(--space-4) var(--space-4);
-    min-height: 64px;
-    border-top-left-radius: 32px 16px;
-    border-top-right-radius: 10px 6px;
+    padding: var(--space-3) var(--space-4) calc(var(--space-4) + 2px) calc(var(--space-4) + 4px);
+    height: 66px;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 8px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
 
   .paper {
@@ -505,7 +456,6 @@
   }
 
   .tagRow {
-    padding: var(--space-3);
-    margin-bottom: var(--space-2);
+    padding-bottom: var(--space-2);
   }
 }

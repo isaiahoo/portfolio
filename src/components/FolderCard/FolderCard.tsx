@@ -6,14 +6,12 @@ import styles from './FolderCard.module.css';
 
 interface FolderCardProps {
   data: FolderData;
-  isOpen: boolean;
-  onToggle: () => void;
   animationDelay?: number;
 }
 
-export default function FolderCard({ data, isOpen, onToggle, animationDelay = 0 }: FolderCardProps) {
+export default function FolderCard({ data, animationDelay = 0 }: FolderCardProps) {
   const { variant, label, items } = data;
-  const { showCursor, showTag, typingText } = useEasterEgg(isOpen, variant);
+  const { showCursor, showTag, typingText } = useEasterEgg(false, variant);
 
   return (
     <motion.div
@@ -26,28 +24,9 @@ export default function FolderCard({ data, isOpen, onToggle, animationDelay = 0 
         damping: 30,
         delay: animationDelay
       }}
-      whileHover="hover"
     >
-      <button
-        className={`${styles.folder} ${isOpen ? styles.open : ''}`}
-        onClick={onToggle}
-        aria-expanded={isOpen}
-        aria-label={`${label}`}
-      >
-        <motion.div
-          className={styles.paper}
-          variants={{
-            rest: { y: 0 },
-            hover: {
-              y: isOpen ? 0 : -32,
-              transition: {
-                type: "spring",
-                stiffness: 400,
-                damping: 30
-              }
-            }
-          }}
-        >
+      <div className={styles.folder}>
+        <div className={styles.paper}>
           {variant === 'skills' ? (
             <div className={styles.tagRow}>
               {items.map((item) => (
@@ -66,12 +45,10 @@ export default function FolderCard({ data, isOpen, onToggle, animationDelay = 0 
                 <li
                   key={item.id}
                   className={styles.listItem}
-                  style={
-                    {
-                      '--stagger-delay': `${150 + index * 80}ms`,
-                      '--paper-index': index,
-                    } as React.CSSProperties
-                  }
+                  style={{
+                    '--stagger-delay': `${150 + index * 80}ms`,
+                    '--paper-index': index
+                  } as React.CSSProperties}
                 >
                   {item.url ? (
                     <a
@@ -100,9 +77,9 @@ export default function FolderCard({ data, isOpen, onToggle, animationDelay = 0 
               ))}
             </ul>
           )}
-        </motion.div>
+        </div>
         <span className={styles.folderLabel}>{label}</span>
-      </button>
+      </div>
     </motion.div>
   );
 }
